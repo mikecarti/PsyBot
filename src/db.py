@@ -38,5 +38,5 @@ class TherapistDB:
     def _get(self, full_name_url) -> Therapist:
         return self.therapists.get(full_name_url)
 
-    def get_booking_available_dates(self, full_name_url, day_of_week) -> List[str]:
+    def get_booking_available_time_single_day(self, full_name_url, day_of_week) -> List[str]:
         return self._get(full_name_url).get_booking_available_dates(day_of_week)

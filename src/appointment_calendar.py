@@ -34,21 +34,19 @@ class Calendar:
     def _log(self, msg):
         print(f'{self.therapist_name}: {msg}')
 
-    def get_available_dates(self, day_of_week):
+    def get_available_dates(self, day_of_week: int):
         nearest_day = self._get_nearest_possible_day_of_week(day_of_week)
-        available_dates = []
+        available_times = []
         for time_slot in self.calendar[nearest_day]:
             if self.calendar[nearest_day][time_slot] is None:
-                available_dates.append(time_slot)
-        return available_dates
+                available_times.append(time_slot)
+        return available_times
 
-    def _get_nearest_possible_day_of_week(self, day_of_week):
+    def _get_nearest_possible_day_of_week(self, desired_weekday):
         # get current UTC time
         now_utc = datetime.datetime.now(tz=self.utc_tz)
         # convert to Moscow time
         now_moscow = now_utc.astimezone(self.moscow_tz)
-        # get weekday
-        desired_weekday = DAYS_OF_WEEK.index(day_of_week)
         # find nearest desired weekday
         days_ahead = (desired_weekday - now_moscow.weekday()) % 7
         nearest_desired_weekday = now_moscow + datetime.timedelta(days=days_ahead)

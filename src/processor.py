@@ -2,7 +2,7 @@ from src.db import TherapistDB
 from telegram import InlineKeyboardMarkup, InlineKeyboardButton
 from typing import *
 from constants import DAYS_OF_WEEK
-from transliterate import translit
+from utils import weekday_to_num
 
 
 class CallbackProcessor:
@@ -38,11 +38,11 @@ class CallbackProcessor:
         return answer
 
     def get_booking_available_dates(self, full_name, day_of_week) -> dict:
-        available_dates = self.db.get_booking_available_dates(full_name, day_of_week)
+        available_times = self.db.get_booking_available_time_single_day(full_name, day_of_week)
         buttons = []
-        for date in available_dates:
-            callback_data = f"booking/{full_name}/{date}"
-            buttons.append(InlineKeyboardButton(date, callback_data=callback_data))
+        for time in available_times:
+            callback_data = f"booking/{full_name}/{day_of_week}/{time}"
+            buttons.append(InlineKeyboardButton(time, callback_data=callback_data))
         reply_markup = InlineKeyboardMarkup([buttons])
         answer = {'text': "Available dates", 'reply_markup': reply_markup}
         return answer
@@ -68,11 +68,10 @@ class CallbackProcessor:
 
     def _send_current_week_options(self, full_therapist_name) -> InlineKeyboardMarkup:
         reply_markup = InlineKeyboardMarkup(
-            [[InlineKeyboardButton(day, f"booking/{full_therapist_name}/{day}")]
+            [[InlineKeyboardButton(day, f"booking/{full_therapist_name}/{weekday_to_num(day)}")]
              for day in DAYS_OF_WEEK])
         return reply_markup
 
     def _text_to_http(self, full_name) -> str:
-        translit(full_name, "ru", reversed=True)
         return full_name.replace(' ', '_').lower()
 

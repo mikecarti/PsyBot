@@ -10,5 +10,5 @@ class Therapist:
         self.description = description
         self.calendar = Calendar(therapist_name=full_name)
 
-    def get_booking_available_dates(self, day_of_week: str) -> List[str]:
+    def get_booking_available_dates(self, day_of_week: int) -> List[str]:
         return self.calendar.get_available_dates(day_of_week)

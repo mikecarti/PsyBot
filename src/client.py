@@ -65,11 +65,5 @@ class Client:
         await query.answer()
 
         reply = self.processor.process(query.data)
-        if type(reply) == InlineKeyboardMarkup:
-            await query.edit_message_reply_markup(reply_markup=reply)
-        elif type(reply) == dict:
-            therapist_page = f"{reply['full_name']} \n\n{reply['description']}"
-            await query.edit_message_text(text=therapist_page)
-        else:
-            raise ValueError("Unknown reply type: ", type(reply))
+        await query.edit_message_text(text=reply['text'], reply_markup=reply['reply_markup'])
 

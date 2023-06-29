@@ -1,5 +1,7 @@
 from appointment_calendar import Calendar
 from typing import *
+from datetime import date
+
 
 class Therapist:
 
@@ -10,5 +12,9 @@ class Therapist:
         self.description = description
         self.calendar = Calendar(therapist_name=full_name)
 
-    def get_booking_available_dates(self, day_of_week: int) -> List[str]:
-        return self.calendar.get_available_dates(day_of_week)
+    def get_available_time(self, booking_date: date) -> List[str]:
+        return self.calendar.get_available_times(booking_date)
+
+    def book_appointment(self, day_of_week, time_of_day, full_patient_name):
+        self.calendar.book_appointment(day_of_week, time_of_day, full_patient_name)
+

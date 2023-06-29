@@ -38,5 +38,11 @@ class TherapistDB:
     def _get(self, full_name_url) -> Therapist:
         return self.therapists.get(full_name_url)
 
-    def get_booking_available_time_single_day(self, full_name_url, day_of_week) -> List[str]:
-        return self._get(full_name_url).get_booking_available_dates(day_of_week)
+    def get_booking_available_time_single_day(self, full_name_url, booking_date) -> List[str]:
+        return self._get(full_name_url).get_available_time(booking_date)
+
+    # def get_closest_dates(self, therapist_full_name, day_of_week):
+    #     return self._get(therapist_full_name).get_closest_available_week(day_of_week)
+
+    def make_appointment(self, day_of_week, time_of_day, full_therapist_name, full_patient_name):
+        return self._get(full_therapist_name).book_appointment(day_of_week, time_of_day, full_patient_name)

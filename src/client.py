@@ -64,6 +64,6 @@ class Client:
         query = update.callback_query
         await query.answer()
 
-        reply = self.processor.process(query.data)
+        reply = self.processor.process(query.data, update.effective_user.full_name)
         await query.edit_message_text(text=reply['text'], reply_markup=reply['reply_markup'])
 

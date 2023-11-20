@@ -26,7 +26,7 @@ class Client:
     def __init__(self):
         self.db = TherapistDB()
         self.processor = CallbackProcessor(self.db)
-        example1 = Therapist('Timchenko Daniil Gennadyevich', '1234567890', 'TEST')
+        example1 = Therapist('Timchenko Daniil Gennadyevich', '299475406', 'TEST')
         example2 = Therapist('Not Daniil Gennadyevich', '125125125', 'TEST')
         self.db.add_therapist(example1)
         self.db.add_therapist(example2)

@@ -1,11 +1,11 @@
 from src.db import TherapistDB
-from telegram import InlineKeyboardMarkup, InlineKeyboardButton
+from telegram import InlineKeyboardMarkup, InlineKeyboardButton, Bot
 from typing import *
-from constants import DAYS_OF_WEEK
+from constants import DAYS_OF_WEEK, TG_TOKEN
 from utils import weekday_to_num
 import numpy as np
 from telegram_bot_calendar import DetailedTelegramCalendar, LSTEP
-from datetime import date, timedelta, strptime
+from datetime import date, timedelta, datetime
 
 
 class CallbackProcessor:
@@ -75,7 +75,7 @@ class CallbackProcessor:
             response = self.get_booking_available_time(full_therapist_name, int(day_of_week))
             return response
         elif len(callback) == 3:
-            booking_date = strptime(callback[1], "%Y-%m-%d").date()
+            booking_date = datetime.strptime(callback[1], "%Y-%m-%d").date()
             time_of_day = callback[2]
             response = self.make_an_appointment(booking_date, time_of_day, full_therapist_name, full_patient_name)
             return response

@@ -18,18 +18,18 @@ class Calendar:
         return {day_of_month: {time_slot: None for time_slot in self.TIME_SLOTS}
                 for day_of_month in range(1, 31)}
 
-    def book_appointment(self, booking_date: date, time: str, patient_full_name: str):
+    def book_appointment(self, booking_date: date, time: str, patient_full_name: str) -> str:
         day_of_month = booking_date.day
-        self._book_appointment(day_of_month, time, patient_full_name)
+        return self._book_appointment(day_of_month, time, patient_full_name)
 
     def _book_appointment(self, day_of_month: int, time: str, patient_full_name: str) -> str:
         if self.calendar[day_of_month][time] is not None:
-            raise ValueError(f'{self.therapist_name}Appointment already booked.')
-            # return "Ошибка"
+            self._log(f'ERROR for {self.patient_full_name} Appointment already booked.')
+            return "Ошибка, время занято"
         else:
             self.calendar[day_of_month][time] = patient_full_name
             self._log(f'Appointment booked for {day_of_month} at {time} with {patient_full_name}.')
-            return f"Вы записаны к {self.therapist_name} в day_of_month {day_of_month} at time {time}"
+            return f"Вы записаны к {self.therapist_name} на {day_of_month} число во время {time}"
 
     def cancel_appointment(self, day_of_month, time):
         if self.calendar[day_of_month][time] is None:
